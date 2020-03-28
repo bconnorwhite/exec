@@ -1,0 +1,32 @@
+{
+  "name": "@bconnorwhite/exec",
+  "description": "Execute commands while keeping flags easily configurable as an object.",
+  "version": "1.0.0",
+  "main": "./build/index.js",
+  "author": "Connor White",
+  "license": "MIT",
+  "keywords": [
+    "exec",
+    "run",
+    "execute",
+    "parallel",
+    "concurrent",
+    "shell",
+    "flags"
+  ],
+  "scripts": {
+    "build": "babel ./src --out-dir ./build --config-file ./babel.config.json --extensions .ts --delete-dir-on-start && tsc --project ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/node": "^13.9.5",
+    "typescript": "^3.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bconnorwhite/exec.git"
+  }
+}
