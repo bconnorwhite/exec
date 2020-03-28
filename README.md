@@ -1,4 +1,9 @@
 # @bconnorwhite/exec
+![dependencies](https://img.shields.io/david/bconnorwhite/exec)
+![minzipped size](https://img.shields.io/bundlephobia/minzip/@bconnorwhite/exec)
+![typescript](https://img.shields.io/github/languages/top/bconnorwhite/exec)
+![npm](https://img.shields.io/npm/v/@bconnorwhite/exec)
+
 Execute commands while keeping flags easily configurable as an object.
 
 ```
