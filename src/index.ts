@@ -29,3 +29,7 @@ const exec = (command: string, flags?: Flags) => {
 }
 
 export default exec;
+
+export {
+  flag
+}

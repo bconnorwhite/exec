@@ -68,3 +68,24 @@ execAll([{
 });
 // babel ./src --out-dir ./build --config-file ./babel.config.json --watch && tsc --emitDeclarationOnly
 ```
+
+---
+
+##### flag
+```ts
+flag(command: string, options: Options) => string
+
+type Options = {
+  parallel?: boolean; // true will separate commands by &, false or undefined by &&.
+}
+```
+```js
+import { flag } from "@bconnorwhite/exec";
+
+flag("babel ./src", {
+  "out-dir": "./build",
+  "config-file": "./babel.config.json",
+  "watch": true
+});
+// babel ./src --out-dir ./build --config-file ./babel.config.json --watch
+```
