@@ -10,14 +10,14 @@ Execute commands while keeping flags easily configurable as an object.
 yarn add @bconnorwhite/exec
 ```
 
-- Automatically sets `stdio: "inherit"` so output is passed through.
 - Run one or multiple commands
 - Run commands in parallel or series
-
+- Automatically pass through output by setting `stdio: "inherit"`
 
 ### API
 ---
-##### exec
+#### exec
+###### Types
 ```ts
 exec(command: string, flags?: Flags) => void
 
@@ -25,6 +25,7 @@ type Flags = {
   [flag: string]: string | boolean;
 }
 ```
+###### Usage
 ```js
 import exec from "@bconnorwhite/exec";
 
@@ -38,7 +39,8 @@ exec("babel ./src", {
 
 ---
 
-##### execAll
+#### execAll
+###### Types
 ```ts
 execAll(commands: Command[], options: Options) => void
 
@@ -51,6 +53,7 @@ type Options = {
   parallel?: boolean; // true will separate commands by &, false or undefined by &&.
 }
 ```
+###### Usage
 ```js
 import { execAll } from "@bconnorwhite/exec";
 
@@ -71,7 +74,8 @@ execAll([{
 
 ---
 
-##### flag
+#### flag
+###### Types
 ```ts
 flag(command: string, options: Options) => string
 
@@ -79,6 +83,7 @@ type Options = {
   parallel?: boolean; // true will separate commands by &, false or undefined by &&.
 }
 ```
+###### Usage
 ```js
 import { flag } from "@bconnorwhite/exec";
 
