@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { spawn, spawnSync, ChildProcess, SpawnSyncReturns } from "child_process";
 import flag, { Flags } from "./flag";
 
 export type Command = {
@@ -10,22 +10,20 @@ type Options = {
   parallel?: boolean;
 }
 
-function buildCommand(commands: Command | Command[], { parallel = false }: Options) {
-  const operator = parallel ? "&" : "&&";
-  if(Array.isArray(commands)) {
-    return commands.reduce((retval, command) => `${retval ? `${retval} ${operator} ` : ""}${flag(command.command, command.flags)}`, "");
+const exec = (command: string, flags?: Flags, parallel = false) => {
+  const commandString = flag(command, flags);
+  if(parallel) {
+    return spawn(commandString, { stdio: "inherit", shell: true });
   } else {
-    return flag(commands.command, commands.flags);
+    return spawnSync(commandString, { stdio: "inherit", shell: true });
   }
 }
 
 export function execAll(commands: Command[], options: Options = {}) {
-  return exec(buildCommand(commands, options));
-}
-
-const exec = (command: string, flags?: Flags) => {
-  const commandString = flag(command, flags);
-  return execSync(commandString, { stdio: "inherit" });
+  return commands.reduce((retval, { command, flags }) => {
+    retval.push(exec(command, flags, options.parallel));
+    return retval;
+  }, ([] as (ChildProcess | SpawnSyncReturns<Buffer>)[]));
 }
 
 export default exec;

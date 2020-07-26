@@ -19,7 +19,11 @@ yarn add @bconnorwhite/exec
 #### exec
 ###### Types
 ```ts
-exec(command: string, flags?: Flags) => void
+exec(
+  command: string,
+  flags?: Flags,
+  parallel = false
+) => ChildProcess | SpawnSyncReturns<Buffer>
 
 type Flags = {
   [flag: string]: string | boolean;
@@ -42,7 +46,10 @@ exec("babel ./src", {
 #### execAll
 ###### Types
 ```ts
-execAll(commands: Command[], options: Options) => void
+execAll(
+  commands: Command[],
+  options: Options
+) => (ChildProcess | SpawnSyncReturns<Buffer>)[]
 
 type Command = {
   command: string;
