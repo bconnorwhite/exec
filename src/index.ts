@@ -24,11 +24,13 @@ const exec = (command: string, args: string[] = [], flags: Flags = {}, parallel 
   }
 }
 
-export function execAll(commands: Command[], options: Options = {}) {
-  return commands.reduce((retval, { command, args, flags }) => {
-    retval.push(exec(command, args, flags, options.parallel));
-    return retval;
-  }, ([] as (ChildProcess | SpawnSyncReturns<Buffer>)[]));
+export async function execAll(commands: (Command | Promise<Command>)[], options: Options = {}) {
+  return Promise.all(commands).then((commandList) => {
+    return commandList.reduce((retval, { command, args, flags }) => {
+      retval.push(exec(command, args, flags, options.parallel));
+      return retval;
+    }, ([] as (ChildProcess | SpawnSyncReturns<Buffer>)[]));
+  });
 }
 
 export default exec;
