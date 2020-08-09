@@ -67,6 +67,7 @@ export default execSync;
 
 export {
   exec,
+  execSync,
   flagsToArgs,
   Flags
 }
