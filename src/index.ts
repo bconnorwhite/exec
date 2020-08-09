@@ -66,5 +66,6 @@ export async function execAll(commands: (Command | Promise<Command>)[], options:
 export default execSync;
 
 export {
-  flagsToArgs
+  flagsToArgs,
+  Flags
 }
