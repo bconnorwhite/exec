@@ -1,15 +1,23 @@
 
 export type Flags = {
-  [flag: string]: string | boolean | undefined;
+  [flag: string]: string | boolean | string[] | undefined;
+}
+
+export function flag(name: string) {
+  return `--${name}`;
 }
 
 export default function(flags: Flags = {}) {
   return Object.keys(flags).reduce((retval, key) => {
     const value = flags[key];
     if(value === true) {
-      return retval.concat(`--${key}`);
+      return retval.concat(flag(key));
     } else if(typeof value === "string") {
-      return retval.concat([`--${key}`, value]);
+      return retval.concat([flag(key), value]);
+    } else if(Array.isArray(value)) {
+      return retval.concat(value.reduce((list, item) => {
+        return list.concat([flag(key), item]);
+      }, ([] as string[])));
     } else {
       return retval;
     }
