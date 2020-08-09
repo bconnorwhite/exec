@@ -11,6 +11,7 @@ yarn add @bconnorwhite/exec
 ```
 
 - Run one or multiple commands
+- Easily define arguments and flags
 - Run commands in parallel or series
 - Automatically pass through output by setting `stdio: "inherit"`
 
@@ -21,6 +22,7 @@ yarn add @bconnorwhite/exec
 ```ts
 exec(
   command: string,
+  args?: string[],
   flags?: Flags,
   parallel = false
 ) => ChildProcess | SpawnSyncReturns<Buffer>
@@ -33,11 +35,12 @@ type Flags = {
 ```js
 import exec from "@bconnorwhite/exec";
 
-exec("babel ./src", {
+exec("babel", ["./src"], {
   "out-dir": "./build",
   "config-file": "./babel.config.json",
   "watch": true
 });
+// Equivalent of:
 // babel ./src --out-dir ./build --config-file ./babel.config.json --watch
 ```
 
@@ -53,11 +56,12 @@ execAll(
 
 type Command = {
   command: string;
+  args?: string[];
   flags?: Flags;
 }
 
 type Options = {
-  parallel?: boolean; // true will separate commands by &, false or undefined by &&.
+  parallel?: boolean;
 }
 ```
 ###### Usage
@@ -65,39 +69,44 @@ type Options = {
 import { execAll } from "@bconnorwhite/exec";
 
 execAll([{
-  command: "babel ./src",
+  command: "babel",
+  args: ["./src"],
   flags: {
     "out-dir": "./build",
     "config-file": "./babel.config.json",
     "watch": true
   }
 }, {
-  command: "tsc --emitDeclarationOnly"
+  command: "tsc",
+  flags: {
+    "emitDeclarationOnly": true
+  }
 }], {
   parallel: false
 });
+// Equivalent of:
 // babel ./src --out-dir ./build --config-file ./babel.config.json --watch && tsc --emitDeclarationOnly
 ```
 
 ---
 
-#### flag
+#### flagsToArray
 ###### Types
 ```ts
-flag(command: string, options: Options) => string
+flagsToArray(flags?: Flags) => string[]
 
-type Options = {
-  parallel?: boolean; // true will separate commands by &, false or undefined by &&.
+type Flags = {
+  [flag: string]: string | boolean;
 }
 ```
 ###### Usage
 ```js
-import { flag } from "@bconnorwhite/exec";
+import { flagsToArray } from "@bconnorwhite/exec";
 
-flag("babel ./src", {
+flagsToArray({
   "out-dir": "./build",
   "config-file": "./babel.config.json",
   "watch": true
 });
-// babel ./src --out-dir ./build --config-file ./babel.config.json --watch
+// ["--out-dir", "./build", "--config-file", "./babel.config.json", "--watch"]
 ```
