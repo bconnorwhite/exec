@@ -3,7 +3,7 @@ import flagsToArgs, { Flags } from "./flag";
 
 export type Command = {
   command: string;
-  args?: string[];
+  args?: string | string[];
   flags?: Flags;
 }
 
@@ -11,11 +11,17 @@ export type Options = {
   parallel?: boolean;
 }
 
-function getArgs(args: string[] = [], flags: Flags = {}) {
-  return args.concat(flagsToArgs(flags));
+function getArgs(args: string | string[] = [], flags: Flags = {}) {
+  let retval: string[] = [];
+  if(typeof args === "string") {
+    retval.push(args);
+  } else {
+    retval = retval.concat(args);
+  }
+  return retval.concat(flagsToArgs(flags));
 }
 
-const exec = (command: string, args: string[] = [], flags: Flags = {}, parallel = false) => {
+const exec = (command: string, args: string | string[] = [], flags: Flags = {}, parallel = false) => {
   const argList = getArgs(args, flags);
   if(parallel) {
     return spawn(command, argList, { stdio: "inherit" });

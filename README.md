@@ -22,7 +22,7 @@ yarn add @bconnorwhite/exec
 ```ts
 exec(
   command: string,
-  args?: string[],
+  args?: string | string[],
   flags?: Flags,
   parallel = false
 ) => ChildProcess | SpawnSyncReturns<Buffer>
@@ -52,11 +52,11 @@ exec("babel", ["./src"], {
 execAll(
   commands: Command[],
   options: Options
-) => (ChildProcess | SpawnSyncReturns<Buffer>)[]
+) => Promise<(ChildProcess | SpawnSyncReturns<Buffer>)[]>
 
 type Command = {
   command: string;
-  args?: string[];
+  args?: string | string[];
   flags?: Flags;
 }
 
