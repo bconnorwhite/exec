@@ -28,7 +28,7 @@ exec(
 ) => ChildProcess | SpawnSyncReturns<Buffer>
 
 type Flags = {
-  [flag: string]: string | boolean;
+  [flag: string]: string | boolean | undefined;
 }
 ```
 ###### Usage
@@ -96,7 +96,7 @@ execAll([{
 flagsToArray(flags?: Flags) => string[]
 
 type Flags = {
-  [flag: string]: string | boolean;
+  [flag: string]: string | boolean | undefined;
 }
 ```
 ###### Usage

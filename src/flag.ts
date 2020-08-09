@@ -1,6 +1,6 @@
 
 export type Flags = {
-  [flag: string]: string | boolean;
+  [flag: string]: string | boolean | undefined;
 }
 
 export default function(flags: Flags = {}) {
