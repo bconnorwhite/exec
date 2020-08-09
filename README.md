@@ -13,6 +13,7 @@ yarn add @bconnorwhite/exec
 - Run one or multiple commands
 - Easily define arguments and flags
 - Run commands in parallel or series
+- Inject environment variables
 - Automatically pass through output by setting `stdio: "inherit"`
 
 ### API
@@ -20,12 +21,14 @@ yarn add @bconnorwhite/exec
 #### exec
 ###### Types
 ```ts
-exec(
-  command: string,
-  args?: string | string[],
-  flags?: Flags,
-  parallel = false
-) => ChildProcess | SpawnSyncReturns<Buffer>
+exec(command: Command) => ChildProcess | SpawnSyncReturns<Buffer>
+
+type Command = {
+  command: string;
+  args?: string | string[];
+  flags?: Flags;
+  env?: NodeJS.ProcessEnv;
+}
 
 type Flags = {
   [flag: string]: string | boolean | string[] | undefined;
@@ -35,11 +38,16 @@ type Flags = {
 ```js
 import exec from "@bconnorwhite/exec";
 
-exec("babel", ["./src"], {
-  "out-dir": "./build",
-  "config-file": "./babel.config.json",
-  "watch": true
+exec({
+  command: "babel",
+  args: ["./src"],
+  flags: {
+    "out-dir": "./build",
+    "config-file": "./babel.config.json",
+    "watch": true
+  }
 });
+
 // Equivalent of:
 // babel ./src --out-dir ./build --config-file ./babel.config.json --watch
 ```
@@ -58,9 +66,11 @@ type Command = {
   command: string;
   args?: string | string[];
   flags?: Flags;
+  env?: NodeJS.ProcessEnv;
 }
 
 type Options = {
+  env?: NodeJS.ProcessEnv;
   parallel?: boolean;
 }
 ```
@@ -82,10 +92,13 @@ execAll([{
     "emitDeclarationOnly": true
   }
 }], {
+  env: {
+    NODE_ENV: "development"
+  },
   parallel: false
 });
 // Equivalent of:
-// babel ./src --out-dir ./build --config-file ./babel.config.json --watch && tsc --emitDeclarationOnly
+// NODE_ENV=development babel ./src --out-dir ./build --config-file ./babel.config.json --watch && tsc --emitDeclarationOnly
 ```
 
 ---

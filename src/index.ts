@@ -5,9 +5,11 @@ export type Command = {
   command: string;
   args?: string | string[];
   flags?: Flags;
+  env?: NodeJS.ProcessEnv;
 }
 
-export type Options = {
+export type ExecAllOptions = {
+  env?: NodeJS.ProcessEnv;
   parallel?: boolean;
 }
 
@@ -21,25 +23,47 @@ function getArgs(args: string | string[] = [], flags: Flags = {}) {
   return retval.concat(flagsToArgs(flags));
 }
 
-const exec = (command: string, args: string | string[] = [], flags: Flags = {}, parallel = false) => {
-  const argList = getArgs(args, flags);
-  if(parallel) {
-    return spawn(command, argList, { stdio: "inherit" });
-  } else {
-    return spawnSync(command, argList, { stdio: "inherit" });
+function mergeEnv(env: NodeJS.ProcessEnv = {}) {
+  return {
+    ...process.env,
+    ...env
   }
 }
 
-export async function execAll(commands: (Command | Promise<Command>)[], options: Options = {}) {
+const exec = ({ command, args, flags, env }: Command) => {
+  const argsList = getArgs(args, flags);
+  return spawn(command, argsList, {
+    env: mergeEnv(env),
+    stdio: "inherit"
+  });
+}
+
+const execSync = ({ command, args, flags, env }: Command) => {
+  const argsList = getArgs(args, flags);
+  return spawnSync(command, argsList, {
+    env: mergeEnv(env),
+    stdio: "inherit"
+  });
+}
+
+export async function execAll(commands: (Command | Promise<Command>)[], options: ExecAllOptions = {}) {
   return Promise.all(commands).then((commandList) => {
-    return commandList.reduce((retval, { command, args, flags }) => {
-      retval.push(exec(command, args, flags, options.parallel));
+    return commandList.reduce((retval, command) => {
+      const payload = {
+        env: options.env,
+        ...command
+      };
+      if(options.parallel) {
+        retval.push(exec(payload));
+      } else {
+        retval.push(execSync(payload));
+      }
       return retval;
     }, ([] as (ChildProcess | SpawnSyncReturns<Buffer>)[]));
   });
 }
 
-export default exec;
+export default execSync;
 
 export {
   flagsToArgs
