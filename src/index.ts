@@ -32,7 +32,7 @@ function mergeEnv(env: NodeJS.ProcessEnv = {}) {
   }
 }
 
-const exec = ({ command, args, flags, env, verbose }: Command) => {
+const exec = ({ command, args, flags, env, verbose = true }: Command) => {
   const argsList = getArgs(args, flags);
   return spawn(command, argsList, {
     env: mergeEnv(env),
@@ -40,7 +40,7 @@ const exec = ({ command, args, flags, env, verbose }: Command) => {
   });
 }
 
-const execSync = ({ command, args, flags, env, verbose }: Command) => {
+const execSync = ({ command, args, flags, env, verbose = true }: Command) => {
   const argsList = getArgs(args, flags);
   return spawnSync(command, argsList, {
     env: mergeEnv(env),
