@@ -14,7 +14,7 @@ yarn add @bconnorwhite/exec
 - Easily define arguments and flags
 - Run commands in parallel or series
 - Inject environment variables
-- Automatically pass through output by setting `stdio: "inherit"`
+- Set verbose to pass through output
 
 ### API
 ---
@@ -28,6 +28,7 @@ type Command = {
   args?: string | string[];
   flags?: Flags;
   env?: NodeJS.ProcessEnv;
+  verbose?: boolean;
 }
 
 type Flags = {
@@ -40,16 +41,16 @@ import exec from "@bconnorwhite/exec";
 
 exec({
   command: "babel",
-  args: ["./src"],
+  args: "./src", // for multiple args, use an array instead
   flags: {
     "out-dir": "./build",
     "config-file": "./babel.config.json",
-    "watch": true
+    "w": true // single character flags will be set using a single dash
   }
 });
 
 // Equivalent of:
-// babel ./src --out-dir ./build --config-file ./babel.config.json --watch
+// babel ./src --out-dir ./build --config-file ./babel.config.json -w
 ```
 
 ---
@@ -67,10 +68,12 @@ type Command = {
   args?: string | string[];
   flags?: Flags;
   env?: NodeJS.ProcessEnv;
+  verbose?: boolean;
 }
 
 type Options = {
-  env?: NodeJS.ProcessEnv;
+  env?: NodeJS.ProcessEnv; // default, will not override individual commands
+  verbose?: boolean; // default, will not override individual commands
   parallel?: boolean;
 }
 ```
@@ -95,6 +98,7 @@ execAll([{
   env: {
     NODE_ENV: "development"
   },
+  verbose: true,
   parallel: false
 });
 // Equivalent of:
