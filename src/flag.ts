@@ -4,7 +4,11 @@ export type Flags = {
 }
 
 export function flag(name: string) {
-  return `--${name}`;
+  if(name.length === 1) {
+    return `-${name}`;
+  } else {
+    return `--${name}`
+  }
 }
 
 export default function(flags: Flags = {}) {
