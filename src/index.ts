@@ -6,12 +6,12 @@ export type Command = {
   args?: string | string[];
   flags?: Flags;
   env?: NodeJS.ProcessEnv;
-  verbose?: boolean;
+  silent?: boolean;
 }
 
 export type ExecAllOptions = {
   env?: NodeJS.ProcessEnv;
-  verbose?: boolean;
+  silent?: boolean;
   parallel?: boolean;
 }
 
@@ -32,19 +32,19 @@ function mergeEnv(env: NodeJS.ProcessEnv = {}) {
   }
 }
 
-const exec = ({ command, args, flags, env, verbose = true }: Command) => {
+const exec = ({ command, args, flags, env, silent }: Command) => {
   const argsList = getArgs(args, flags);
   return spawn(command, argsList, {
     env: mergeEnv(env),
-    stdio: verbose ? "inherit" : "ignore"
+    stdio: silent ? "ignore" : "inherit"
   });
 }
 
-const execSync = ({ command, args, flags, env, verbose = true }: Command) => {
+const execSync = ({ command, args, flags, env, silent }: Command) => {
   const argsList = getArgs(args, flags);
   return spawnSync(command, argsList, {
     env: mergeEnv(env),
-    stdio: verbose ? "inherit" : "ignore"
+    stdio: silent ? "ignore" : "inherit"
   });
 }
 
@@ -53,7 +53,7 @@ export async function execAll(commands: (Command | Promise<Command>)[], options:
     return commandList.reduce((retval, command) => {
       const payload = {
         env: options.env,
-        verbose: options.verbose,
+        silent: options.silent,
         ...command
       };
       if(options.parallel) {

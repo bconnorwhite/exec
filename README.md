@@ -14,7 +14,7 @@ yarn add @bconnorwhite/exec
 - Easily define arguments and flags
 - Run commands in parallel or series
 - Inject environment variables
-- Set verbose to pass through output
+- Set silent to ignore output
 
 ### API
 ---
@@ -28,7 +28,7 @@ type Command = {
   args?: string | string[];
   flags?: Flags;
   env?: NodeJS.ProcessEnv;
-  verbose?: boolean;
+  silent?: boolean;
 }
 
 type Flags = {
@@ -68,12 +68,12 @@ type Command = {
   args?: string | string[];
   flags?: Flags;
   env?: NodeJS.ProcessEnv;
-  verbose?: boolean;
+  silent?: boolean;
 }
 
 type Options = {
   env?: NodeJS.ProcessEnv; // default, will not override individual commands
-  verbose?: boolean; // default, will not override individual commands
+  silent?: boolean; // default, will not override individual commands
   parallel?: boolean;
 }
 ```
@@ -98,7 +98,6 @@ execAll([{
   env: {
     NODE_ENV: "development"
   },
-  verbose: true,
   parallel: false
 });
 // Equivalent of:
