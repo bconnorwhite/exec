@@ -107,10 +107,11 @@ execAll([{
 
 ---
 
-#### flagsToArray
+#### flagsToArgs
+
 ###### Types
 ```ts
-flagsToArray(flags?: Flags) => string[]
+flagsToArgs(flags?: Flags) => string[]
 
 type Flags = {
   [flag: string]: string | boolean | string[] | undefined;
@@ -118,12 +119,27 @@ type Flags = {
 ```
 ###### Usage
 ```js
-import { flagsToArray } from "@bconnorwhite/exec";
+import { flagsToArgs } from "@bconnorwhite/exec";
 
-flagsToArray({
+flagsToArgs({
   "out-dir": "./build",
   "config-file": "./babel.config.json",
   "watch": true
 });
 // ["--out-dir", "./build", "--config-file", "./babel.config.json", "--watch"]
+```
+
+flagsToArgs is useful for adding flags that must preceed later arguments. For example:
+
+```ts
+import { flagsToArgs } from "@bconnorwhite/exec";
+
+const files = [...];
+
+exec({
+  command: "wc",
+  args: flagsToArgs({ l: true }).concat(files)
+});
+// Equivalent of:
+// wc -l [FILES]...
 ```
