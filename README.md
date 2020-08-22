@@ -1,8 +1,7 @@
 # @bconnorwhite/exec
-![dependencies](https://img.shields.io/david/bconnorwhite/exec)
-![minzipped size](https://img.shields.io/bundlephobia/minzip/@bconnorwhite/exec)
-![typescript](https://img.shields.io/github/languages/top/bconnorwhite/exec)
 ![npm](https://img.shields.io/npm/v/@bconnorwhite/exec)
+![typescript](https://img.shields.io/github/languages/top/bconnorwhite/exec)
+![dependencies](https://img.shields.io/david/bconnorwhite/exec)
 
 Execute commands while keeping flags easily configurable as an object.
 
@@ -16,29 +15,24 @@ yarn add @bconnorwhite/exec
 - Inject environment variables
 - Set silent to ignore output
 
+
 ### API
+
+- [exec](#exec)  
+- [execSync](#execSync)  
+- [execAll](#execAll)  
+- [flagsToArgs](#flagsToArgs)
+
 ---
 #### exec
-###### Types
-```ts
-exec(command: Command) => ChildProcess | SpawnSyncReturns<Buffer>
-
-type Command = {
-  command: string;
-  args?: string | string[];
-  flags?: Flags;
-  env?: NodeJS.ProcessEnv;
-  silent?: boolean;
-}
-
-type Flags = {
-  [flag: string]: string | boolean | string[] | undefined;
-}
-```
 ###### Usage
 ```js
 import exec from "@bconnorwhite/exec";
 
+// Simple usage:
+exec("echo", "hello");
+
+// Object usage:
 exec({
   command: "babel",
   args: "./src", // for multiple args, use an array instead
@@ -52,16 +46,10 @@ exec({
 // Equivalent of:
 // babel ./src --out-dir ./build --config-file ./babel.config.json -w
 ```
-
----
-
-#### execAll
 ###### Types
 ```ts
-execAll(
-  commands: Command[],
-  options: Options
-) => Promise<(ChildProcess | SpawnSyncReturns<Buffer>)[]>
+exec(command: string, args: Args, flags: Flags, { env, silent }: Options): Promise<ExecResult>;
+exec({ command, args, flags, env, silent }: Command): Promise<ExecResult>;
 
 type Command = {
   command: string;
@@ -71,12 +59,50 @@ type Command = {
   silent?: boolean;
 }
 
-type Options = {
-  env?: NodeJS.ProcessEnv; // default, will not override individual commands
-  silent?: boolean; // default, will not override individual commands
-  parallel?: boolean;
+type Flags = {
+  [flag: string]: string | boolean | string[] | undefined;
+}
+
+type ExecResult = {
+  error: string;
+  output: string;
+  jsonOutput: () => JSONObject | undefined;
+  jsonError: () => JSONObject | undefined;
 }
 ```
+
+#### execSync
+###### Usage
+```js
+import { execSync } from "@bconnorwhite/exec";
+
+// Simple usage:
+execSync("echo", "hello");
+
+// Object usage:
+execSync({
+  command: "babel",
+  args: "./src", // for multiple args, use an array instead
+  flags: {
+    "out-dir": "./build",
+    "config-file": "./babel.config.json",
+    "w": true // single character flags will be set using a single dash
+  }
+});
+
+// Equivalent of:
+// babel ./src --out-dir ./build --config-file ./babel.config.json -w
+```
+###### Types
+```ts
+execSync(command: string, args: Args, flags: Flags, { env, silent }: Options): ExecResult;
+execSync({ command, args, flags, env, silent }: Command): ExecResult;
+
+```
+
+---
+
+#### execAll
 ###### Usage
 ```js
 import { execAll } from "@bconnorwhite/exec";
@@ -103,19 +129,24 @@ execAll([{
 // Equivalent of:
 // NODE_ENV=development babel ./src --out-dir ./build --config-file ./babel.config.json --watch && tsc --emitDeclarationOnly
 ```
+###### Types
+```ts
+execAll(
+  commands: Command[],
+  options: ExecAllOptions
+) => Promise<ExecResult[]>
+
+type ExecAllOptions = {
+  env?: NodeJS.ProcessEnv; // default, will not override individual commands
+  silent?: boolean; // default, will not override individual commands
+  parallel?: boolean;
+}
+```
 
 ---
 
 #### flagsToArgs
 
-###### Types
-```ts
-flagsToArgs(flags?: Flags) => string[]
-
-type Flags = {
-  [flag: string]: string | boolean | string[] | undefined;
-}
-```
 ###### Usage
 ```js
 import { flagsToArgs } from "@bconnorwhite/exec";
@@ -126,6 +157,14 @@ flagsToArgs({
   "watch": true
 });
 // ["--out-dir", "./build", "--config-file", "./babel.config.json", "--watch"]
+```
+###### Types
+```ts
+flagsToArgs(flags?: Flags) => string[]
+
+type Flags = {
+  [flag: string]: string | boolean | string[] | undefined;
+}
 ```
 
 flagsToArgs is useful for adding flags that must preceed later arguments. For example:

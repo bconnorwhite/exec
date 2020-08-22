@@ -1,21 +1,35 @@
-import { spawn, spawnSync, ChildProcess, SpawnSyncReturns } from "child_process";
+import exec from "./exec";
+import execSync from "./exec-sync";
+import execAll, { ExecAllOptions } from "./exec-all";
+import { JSONObject } from "parse-json-object";
 import flagsToArgs, { Flags } from "./flag";
+
+export type SpawnOptions = {
+  env?: NodeJS.ProcessEnv;
+}
+
+export type OutputOptions = {
+  silent?: boolean;
+}
+
+export type Options = SpawnOptions & OutputOptions;
+
+export type Args = string | string[];
 
 export type Command = {
   command: string;
-  args?: string | string[];
+  args?: Args;
   flags?: Flags;
-  env?: NodeJS.ProcessEnv;
-  silent?: boolean;
+} & Options;
+
+export type ExecResult = {
+  error: string;
+  output: string;
+  jsonOutput: () => JSONObject | undefined;
+  jsonError: () => JSONObject | undefined;
 }
 
-export type ExecAllOptions = {
-  env?: NodeJS.ProcessEnv;
-  silent?: boolean;
-  parallel?: boolean;
-}
-
-function getArgs(args: string | string[] = [], flags: Flags = {}) {
+export function getArgs(args: string | string[] = [], flags: Flags = {}) {
   let retval: string[] = [];
   if(typeof args === "string") {
     retval.push(args);
@@ -25,52 +39,23 @@ function getArgs(args: string | string[] = [], flags: Flags = {}) {
   return retval.concat(flagsToArgs(flags));
 }
 
-function mergeEnv(env: NodeJS.ProcessEnv = {}) {
+export function getSpawnOptions({ env }: SpawnOptions) {
   return {
-    ...process.env,
-    ...env
+    env: {
+      ...process.env,
+      ...env
+    }
   }
 }
 
-const exec = ({ command, args, flags, env, silent }: Command) => {
-  const argsList = getArgs(args, flags);
-  return spawn(command, argsList, {
-    env: mergeEnv(env),
-    stdio: silent ? "ignore" : "inherit"
-  });
-}
-
-const execSync = ({ command, args, flags, env, silent }: Command) => {
-  const argsList = getArgs(args, flags);
-  return spawnSync(command, argsList, {
-    env: mergeEnv(env),
-    stdio: silent ? "ignore" : "inherit"
-  });
-}
-
-export async function execAll(commands: (Command | Promise<Command>)[], options: ExecAllOptions = {}) {
-  return Promise.all(commands).then((commandList) => {
-    return commandList.reduce((retval, command) => {
-      const payload = {
-        env: options.env,
-        silent: options.silent,
-        ...command
-      };
-      if(options.parallel) {
-        retval.push(exec(payload));
-      } else {
-        retval.push(execSync(payload));
-      }
-      return retval;
-    }, ([] as (ChildProcess | SpawnSyncReturns<Buffer>)[]));
-  });
-}
-
-export default execSync;
+export default exec;
 
 export {
   exec,
   execSync,
+  execAll,
   flagsToArgs,
-  Flags
+  Flags,
+  ExecAllOptions,
+  JSONObject
 }
