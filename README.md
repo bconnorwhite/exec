@@ -55,6 +55,7 @@ type Command = {
   command: string;
   args?: string | string[];
   flags?: Flags;
+  cwd?: string;
   env?: NodeJS.ProcessEnv;
   silent?: boolean;
 }
@@ -137,6 +138,7 @@ execAll(
 ) => Promise<ExecResult[]>
 
 type ExecAllOptions = {
+  cwd?: string;
   env?: NodeJS.ProcessEnv; // default, will not override individual commands
   silent?: boolean; // default, will not override individual commands
   parallel?: boolean;
