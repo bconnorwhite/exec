@@ -8,6 +8,7 @@ export default async function execAll(commands: (Command | Promise<Command>)[], 
   return Promise.all(commands).then((commandList) => {
     return commandList.reduce((retval, command) => {
       const payload = {
+        cwd: options.cwd,
         env: options.env,
         silent: options.silent,
         ...command

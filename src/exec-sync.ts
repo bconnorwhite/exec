@@ -23,16 +23,22 @@ function run(command: string, args: string[], spawnOptions: SpawnOptions, output
   return getResult(child, outputOptions);
 }
 
-export default function execSync(command: string, args: Args, flags: Flags, { env, silent }: Options): ExecResult;
-export default function execSync({ command, args, flags, env, silent }: Command): ExecResult;
+export default function execSync(command: string, args: Args, flags: Flags, { cwd, env, silent }: Options): ExecResult;
+export default function execSync({ command, args, flags, cwd, env, silent }: Command): ExecResult;
 export default function execSync(cmd: string | Command, args?: Args, flags?: Flags, options: Options = {}): ExecResult {
   if(typeof cmd === "string") {
     const argsList = getArgs(args, flags);
-    const spawnOptions = getSpawnOptions({ env: options.env });
+    const spawnOptions = getSpawnOptions({
+      cwd: options.cwd,
+      env: options.env
+    });
     return run(cmd, argsList, spawnOptions, { silent: options.silent });
   } else {
     const argsList = getArgs(cmd.args, cmd.flags);
-    const spawnOptions = getSpawnOptions({ env: cmd.env });
+    const spawnOptions = getSpawnOptions({
+      cwd: cmd.cwd,
+      env: cmd.env
+    });
     return run(cmd.command, argsList, spawnOptions, { silent: cmd.silent });
   }
 }

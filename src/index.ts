@@ -6,6 +6,7 @@ import flagsToArgs, { Flags } from "./flag";
 
 export type SpawnOptions = {
   env?: NodeJS.ProcessEnv;
+  cwd?: string;
 }
 
 export type OutputOptions = {
@@ -39,8 +40,9 @@ export function getArgs(args: string | string[] = [], flags: Flags = {}) {
   return retval.concat(flagsToArgs(flags));
 }
 
-export function getSpawnOptions({ env }: SpawnOptions) {
+export function getSpawnOptions({ cwd, env }: SpawnOptions) {
   return {
+    cwd,
     env: {
       ...process.env,
       ...env
