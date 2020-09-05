@@ -39,9 +39,10 @@ npm install @bconnorwhite/exec
 ### API
 
 - [exec](#exec)  
-- [execSync](#execSync)  
-- [execAll](#execAll)  
-- [flagsToArgs](#flagsToArgs)
+- [execSync](#execsync)  
+- [execAll](#execall)  
+- [flagsToArgs](#flagstoargs)
+- [commandToString](#commandtostring)
 
 ##
 
@@ -126,8 +127,8 @@ function execSync({ command, args, flags, env, silent }: Command): ExecResult;
 
 ##
 
-### execAll
-#### Usage
+## execAll
+### Usage
 ```js
 import { execAll } from "@bconnorwhite/exec";
 
@@ -170,9 +171,9 @@ type ExecAllOptions = {
 
 ##
 
-### flagsToArgs
+## flagsToArgs
 
-#### Usage
+### Usage
 ```js
 import { flagsToArgs } from "@bconnorwhite/exec";
 
@@ -183,7 +184,7 @@ flagsToArgs({
 });
 // ["--out-dir", "./build", "--config-file", "./babel.config.json", "--watch"]
 ```
-#### Types
+### Types
 ```ts
 function flagsToArgs(flags?: Flags): string[];
 
@@ -209,9 +210,9 @@ exec({
 
 ##
 
-### commandToString
+## commandToString
 
-#### Usage
+### Usage
 ```js
 import { commandToString } from "@bconnorwhite/exec";
 
@@ -226,7 +227,7 @@ commandToString({
 });
 // "foo a b -c -d ok --long"
 ```
-#### Types
+### Types
 ```ts
 function commandToString(command: Command): string;
 
