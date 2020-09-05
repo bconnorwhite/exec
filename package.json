@@ -13,6 +13,7 @@
     "shell",
     "flags"
   ],
+  "files": [
   "main": "./build/index.js",
   "scripts": {
     "build": "babel ./src --out-dir ./build --config-file ./babel.config.json --extensions .ts --delete-dir-on-start && tsc --project ./tsconfig.json",

@@ -1,6 +1,0 @@
-src
-tests
-.gitignore
-babel.config.json
-tsconfig.json
-yarn.lock
