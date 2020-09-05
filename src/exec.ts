@@ -1,6 +1,6 @@
 import { spawn, ChildProcessWithoutNullStreams } from "child_process";
 import parse from "parse-json-object";
-import stripFinalNewline from "./strip-final-newline";
+import { removeTerminatingNewline } from "terminating-newline";
 import { getArgs, getSpawnOptions, Args, Flags, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
 
 function getResult(child: ChildProcessWithoutNullStreams, { silent }: OutputOptions): Promise<ExecResult> {
@@ -18,8 +18,8 @@ function getResult(child: ChildProcessWithoutNullStreams, { silent }: OutputOpti
       error.push(chunk);
     });
     child.on("close", () => {
-      const outputString = stripFinalNewline(Buffer.concat(output)).toString();
-      const errorString = stripFinalNewline(Buffer.concat(error)).toString();
+      const outputString = removeTerminatingNewline(Buffer.concat(output)).toString();
+      const errorString = removeTerminatingNewline(Buffer.concat(error)).toString();
       resolve({
         output: outputString,
         error: errorString,

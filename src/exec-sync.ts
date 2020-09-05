@@ -1,6 +1,6 @@
 import { spawnSync } from "child_process";
 import parse from "parse-json-object";
-import stripFinalNewline from "./strip-final-newline";
+import { removeTerminatingNewline } from "terminating-newline";
 import { getArgs, getSpawnOptions, Args, Flags, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
 
 function getResult({ stdout, stderr }: { stdout: Buffer, stderr: Buffer }, { silent }: OutputOptions) {
@@ -8,8 +8,8 @@ function getResult({ stdout, stderr }: { stdout: Buffer, stderr: Buffer }, { sil
     process.stdout.write(stdout);
     process.stderr.write(stderr);
   }
-  const outputString = stripFinalNewline(stdout).toString();
-  const errorString = stripFinalNewline(stderr).toString()
+  const outputString = removeTerminatingNewline(stdout).toString();
+  const errorString = removeTerminatingNewline(stderr).toString()
   return {
     output: outputString,
     error: errorString,
