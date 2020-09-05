@@ -14,6 +14,6 @@ test("exec jsonOutput", () => {
 
 test("exec cwd", () => {
   exec("ls", ".", {}, { cwd: "tests", silent: true }).then(({ output }) => {
-    expect(output).toBe("exec-all.test.js\nexec-sync.test.js\nexec.test.js");
+    expect(output).toBe("exec-all.test.js\nexec-sync.test.js\nexec.test.js\nindex.test.js");
   });
 });

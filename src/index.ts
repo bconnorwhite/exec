@@ -50,6 +50,10 @@ export function getSpawnOptions({ cwd, env }: SpawnOptions) {
   }
 }
 
+export function commandToString({ command, args, flags }: Command) {
+  return `${command} ${getArgs(args).concat(flagsToArgs(flags)).join(" ")}`;
+}
+
 export default exec;
 
 export {

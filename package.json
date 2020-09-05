@@ -1,11 +1,17 @@
 {
   "name": "@bconnorwhite/exec",
   "version": "5.1.0",
-  "description": "Execute commands while keeping flags easily configurable as an object.",
+  "description": "Execute commands while keeping flags easily configurable as an object",
   "author": "Connor White",
   "license": "MIT",
+  "homepage": "https://connorwhite.org/github/exec",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bconnorwhite/exec.git"
+  },
   "keywords": [
     "exec",
+    "spawn",
     "run",
     "execute",
     "parallel",

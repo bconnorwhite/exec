@@ -1,20 +1,40 @@
-# @bconnorwhite/exec
-![npm](https://img.shields.io/npm/v/@bconnorwhite/exec)
-![typescript](https://img.shields.io/github/languages/top/bconnorwhite/exec)
-![dependencies](https://img.shields.io/david/bconnorwhite/exec)
+<div align="center">
+  <h1>@bconnorwhite/exec</h1>
+  <a href="https://npmjs.com/package/@bconnorwhite/exec">
+    <img alt="npm" src="https://img.shields.io/npm/v/@bconnorwhite/exec.svg">
+  </a>
+  <a href="https://github.com/bconnorwhite/exec">
+    <img alt="typescript" src="https://img.shields.io/github/languages/top/bconnorwhite/exec.svg">
+  </a>
+  <a href='https://coveralls.io/github/bconnorwhite/exec?branch=master'>
+    <img alt="Coveralls github" src="https://img.shields.io/coveralls/github/bconnorwhite/exec.svg">
+  </a>
+  <a href="https://github.com/bconnorwhite/exec">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/bconnorwhite/exec?label=Stars%20Appreciated%21&style=social">
+  </a>
+  <a href="https://twitter.com/bconnorwhite">
+    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/bconnorwhite.svg?label=%40bconnorwhite&style=social">
+  </a>
+</div>
 
-Execute commands while keeping flags easily configurable as an object.
+<br />
 
-```
-yarn add @bconnorwhite/exec
-```
+> Execute commands while keeping flags easily configurable as an object.
 
-- Run one or multiple commands
+- Run one or multiple commands in parallel or series
 - Easily define arguments and flags
-- Run commands in parallel or series
 - Inject environment variables
 - Set silent to ignore output
 
+## Installation
+
+```bash
+yarn add @bconnorwhite/exec
+```
+
+```bash
+npm install @bconnorwhite/exec
+```
 
 ### API
 
@@ -23,9 +43,10 @@ yarn add @bconnorwhite/exec
 - [execAll](#execAll)  
 - [flagsToArgs](#flagsToArgs)
 
----
-#### exec
-###### Usage
+##
+
+## exec
+### Usage
 ```js
 import exec from "@bconnorwhite/exec";
 
@@ -46,10 +67,10 @@ exec({
 // Equivalent of:
 // babel ./src --out-dir ./build --config-file ./babel.config.json -w
 ```
-###### Types
+### Types
 ```ts
-exec(command: string, args: Args, flags: Flags, { env, silent }: Options): Promise<ExecResult>;
-exec({ command, args, flags, env, silent }: Command): Promise<ExecResult>;
+function exec(command: string, args: Args, flags: Flags, { env, silent }: Options): Promise<ExecResult>;
+function exec({ command, args, flags, env, silent }: Command): Promise<ExecResult>;
 
 type Command = {
   command: string;
@@ -72,8 +93,10 @@ type ExecResult = {
 }
 ```
 
-#### execSync
-###### Usage
+##
+
+## execSync
+### Usage
 ```js
 import { execSync } from "@bconnorwhite/exec";
 
@@ -94,17 +117,17 @@ execSync({
 // Equivalent of:
 // babel ./src --out-dir ./build --config-file ./babel.config.json -w
 ```
-###### Types
+### Types
 ```ts
-execSync(command: string, args: Args, flags: Flags, { env, silent }: Options): ExecResult;
-execSync({ command, args, flags, env, silent }: Command): ExecResult;
+function execSync(command: string, args: Args, flags: Flags, { env, silent }: Options): ExecResult;
+function execSync({ command, args, flags, env, silent }: Command): ExecResult;
 
 ```
 
----
+##
 
-#### execAll
-###### Usage
+### execAll
+#### Usage
 ```js
 import { execAll } from "@bconnorwhite/exec";
 
@@ -130,12 +153,12 @@ execAll([{
 // Equivalent of:
 // NODE_ENV=development babel ./src --out-dir ./build --config-file ./babel.config.json --watch && tsc --emitDeclarationOnly
 ```
-###### Types
+### Types
 ```ts
-execAll(
+function execAll(
   commands: Command[],
   options: ExecAllOptions
-) => Promise<ExecResult[]>
+): Promise<ExecResult[]>;
 
 type ExecAllOptions = {
   cwd?: string;
@@ -145,11 +168,11 @@ type ExecAllOptions = {
 }
 ```
 
----
+##
 
-#### flagsToArgs
+### flagsToArgs
 
-###### Usage
+#### Usage
 ```js
 import { flagsToArgs } from "@bconnorwhite/exec";
 
@@ -160,9 +183,9 @@ flagsToArgs({
 });
 // ["--out-dir", "./build", "--config-file", "./babel.config.json", "--watch"]
 ```
-###### Types
+#### Types
 ```ts
-flagsToArgs(flags?: Flags) => string[]
+function flagsToArgs(flags?: Flags): string[];
 
 type Flags = {
   [flag: string]: string | boolean | string[] | undefined;
@@ -183,3 +206,64 @@ exec({
 // Equivalent of:
 // wc -l [FILES]...
 ```
+
+##
+
+### commandToString
+
+#### Usage
+```js
+import { commandToString } from "@bconnorwhite/exec";
+
+commandToString({
+  command: "foo",
+  args: ["a", "b"],
+  flags: {
+    c: true,
+    d: "ok",
+    long: true
+  }
+});
+// "foo a b -c -d ok --long"
+```
+#### Types
+```ts
+function commandToString(command: Command): string;
+
+type Command = {
+  command: string;
+  args?: string | string[];
+  flags?: Flags;
+  env?: NodeJS.ProcessEnv;
+}
+```
+
+##
+
+<br />
+
+<h2>Dependencies<img align="right" alt="dependencies" src="https://img.shields.io/david/bconnorwhite/exec.svg"></h2>
+
+- [parse-json-object](https://npmjs.com/package/parse-json-object): Parse a typed JSON object.
+- [terminating-newline](https://npmjs.com/package/terminating-newline): Add or remove a terminating newline
+
+##
+
+<br />
+
+<h2>Dev Dependencies<img align="right" alt="David" src="https://img.shields.io/david/dev/bconnorwhite/exec.svg"></h2>
+
+- [@bconnorwhite/bob](https://npmjs.com/package/@bconnorwhite/bob): Bob builds and watches typescript projects.
+- [@types/node](https://npmjs.com/package/@types/node): TypeScript definitions for Node.js
+- [coveralls](https://npmjs.com/package/coveralls): Takes json-cov output into stdin and POSTs to coveralls.io
+- [jest](https://npmjs.com/package/jest): Delightful JavaScript Testing.
+
+##
+
+<br />
+
+<h2>License <img align="right" alt="license" src="https://img.shields.io/npm/l/@bconnorwhite/exec.svg"></h2>
+
+[MIT](https://mit-license.org/)
+
+##
