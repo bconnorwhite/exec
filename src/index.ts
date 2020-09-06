@@ -2,7 +2,7 @@ import exec from "./exec";
 import execSync from "./exec-sync";
 import execAll, { ExecAllOptions } from "./exec-all";
 import { JSONObject } from "parse-json-object";
-import flagsToArgs, { Flags } from "./flag";
+import flagsToArgs, { Flags, spaceCheck } from "./flag";
 
 export type SpawnOptions = {
   env?: NodeJS.ProcessEnv;
@@ -33,9 +33,10 @@ export type ExecResult = {
 export function getArgs(args: string | string[] = [], flags: Flags = {}) {
   let retval: string[] = [];
   if(typeof args === "string") {
-    retval.push(args);
+    retval.push(spaceCheck(args))
   } else {
-    retval = retval.concat(args);
+    const argsSpaceCheck = args.map(arg => spaceCheck(arg))
+    retval = retval.concat(argsSpaceCheck);
   }
   return retval.concat(flagsToArgs(flags));
 }
