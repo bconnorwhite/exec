@@ -1,7 +1,8 @@
 import { spawnSync } from "child_process";
 import parse from "parse-json-object";
 import { removeTerminatingNewline } from "terminating-newline";
-import { getArgs, getSpawnOptions, Args, Flags, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
+import { getSpawnOptions, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
+import { getArgs, Args, Flags } from "./args";
 
 function getResult({ stdout, stderr }: { stdout: Buffer, stderr: Buffer }, { silent }: OutputOptions) {
   if(silent !== true) {

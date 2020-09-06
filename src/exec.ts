@@ -1,7 +1,8 @@
 import { spawn, ChildProcessWithoutNullStreams } from "child_process";
 import parse from "parse-json-object";
 import { removeTerminatingNewline } from "terminating-newline";
-import { getArgs, getSpawnOptions, Args, Flags, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
+import { getSpawnOptions, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
+import { getArgs, Args, Flags } from "./args";
 
 function getResult(child: ChildProcessWithoutNullStreams, { silent }: OutputOptions): Promise<ExecResult> {
   return new Promise((resolve) => {
