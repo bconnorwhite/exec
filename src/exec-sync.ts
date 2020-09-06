@@ -1,21 +1,24 @@
 import { spawnSync } from "child_process";
 import parse from "parse-json-object";
+import stripAnsi from "strip-ansi";
 import { removeTerminatingNewline } from "terminating-newline";
 import { getSpawnOptions, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
 import { getArgs, Args, Flags } from "./args";
 
-function getResult({ stdout, stderr }: { stdout: Buffer, stderr: Buffer }, { silent }: OutputOptions) {
+function getResult({ stdout, stderr }: { stdout: Buffer | null, stderr: Buffer | null }, { silent }: OutputOptions) {
   if(silent !== true) {
-    process.stdout.write(stdout);
-    process.stderr.write(stderr);
+    process.stdout.write(stdout ?? "");
+    process.stderr.write(stderr ?? "");
   }
-  const outputString = removeTerminatingNewline(stdout).toString();
-  const errorString = removeTerminatingNewline(stderr).toString()
+  const outputString = stdout ? removeTerminatingNewline(stdout).toString() : "";
+  const errorString = stderr ? removeTerminatingNewline(stderr).toString() : "";
   return {
-    output: outputString,
-    error: errorString,
-    jsonOutput: () => parse(outputString),
-    jsonError: () => parse(errorString)
+    output: stripAnsi(outputString),
+    error: stripAnsi(errorString),
+    colorOutput: outputString,
+    colorError: outputString,
+    jsonOutput: () => parse(stripAnsi(outputString)),
+    jsonError: () => parse(stripAnsi(errorString))
   }
 }
 

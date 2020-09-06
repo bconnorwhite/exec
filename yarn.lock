@@ -4923,10 +4923,10 @@ terminal-link@^2.0.0:
     ansi-escapes "^4.2.1"
     supports-hyperlinks "^2.0.0"
 
-terminating-newline@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/terminating-newline/-/terminating-newline-1.2.1.tgz#9f0cba6c0b21d9ff8add353fa2bbe8cc5bde3153"
-  integrity sha512-X6++kqBCHPLS/+A3ig+9UMBaTeLy8v0yfhO3jz0ooON/PUpDn83SBZ5VHFWty3Mgi158eCv52EgA6Alkmb0NLA==
+terminating-newline@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/terminating-newline/-/terminating-newline-1.2.2.tgz#7411a521bad6972f53ba3a10e9bf25cfd6715e2a"
+  integrity sha512-IGk6ZR6uY3faRGhlWEKMyXmd4Ur1JhZEr9+9FZ1e90hU4qiTADxNoy/jpvuu1myyOcbKvQHhgx9tcQbDRnaHYg==
   dependencies:
     detect-newline "^3.1.0"
 

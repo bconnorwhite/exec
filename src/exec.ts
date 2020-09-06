@@ -1,4 +1,5 @@
 import { spawn, ChildProcessWithoutNullStreams } from "child_process";
+import stripAnsi from "strip-ansi";
 import parse from "parse-json-object";
 import { removeTerminatingNewline } from "terminating-newline";
 import { getSpawnOptions, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
@@ -22,10 +23,12 @@ function getResult(child: ChildProcessWithoutNullStreams, { silent }: OutputOpti
       const outputString = removeTerminatingNewline(Buffer.concat(output)).toString();
       const errorString = removeTerminatingNewline(Buffer.concat(error)).toString();
       resolve({
-        output: outputString,
-        error: errorString,
-        jsonOutput: () => parse(outputString),
-        jsonError: () => parse(errorString)
+        output: stripAnsi(outputString),
+        error: stripAnsi(errorString),
+        colorOutput: outputString,
+        colorError: errorString,
+        jsonOutput: () => parse(stripAnsi(outputString)),
+        jsonError: () => parse(stripAnsi(errorString))
       });
     });
   });

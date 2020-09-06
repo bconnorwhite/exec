@@ -24,15 +24,18 @@ export type Command = {
 export type ExecResult = {
   error: string;
   output: string;
+  colorError: string;
+  colorOutput: string;
   jsonOutput: () => JSONObject | undefined;
   jsonError: () => JSONObject | undefined;
 }
 
-export function getSpawnOptions({ cwd, env }: SpawnOptions) {
+export function getSpawnOptions({ cwd, env }: SpawnOptions): SpawnOptions {
   return {
     cwd,
     env: {
       ...process.env,
+      FORCE_COLOR: "1",
       ...env
     }
   }

@@ -89,6 +89,8 @@ type Flags = {
 type ExecResult = {
   error: string;
   output: string;
+  colorError: string;
+  colorOutput: string;
   jsonOutput: () => JSONObject | undefined;
   jsonError: () => JSONObject | undefined;
 }
@@ -246,6 +248,7 @@ type Command = {
 <h2>Dependencies<img align="right" alt="dependencies" src="https://img.shields.io/david/bconnorwhite/exec.svg"></h2>
 
 - [parse-json-object](https://npmjs.com/package/parse-json-object): Parse a typed JSON object.
+- [strip-ansi](https://npmjs.com/package/strip-ansi): Strip ANSI escape codes from a string
 - [terminating-newline](https://npmjs.com/package/terminating-newline): Add or remove a terminating newline
 
 ##
