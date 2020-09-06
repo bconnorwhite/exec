@@ -2,7 +2,7 @@ import exec from "./exec";
 import execSync from "./exec-sync";
 import execAll, { ExecAllOptions } from "./exec-all";
 import { JSONObject } from "parse-json-object";
-import flagsToArgs, { Flags, spaceCheck } from "./flag";
+import { getArgs, flagsToArgs, Args, Flags } from "./args";
 
 export type SpawnOptions = {
   env?: NodeJS.ProcessEnv;
@@ -14,8 +14,6 @@ export type OutputOptions = {
 }
 
 export type Options = SpawnOptions & OutputOptions;
-
-export type Args = string | string[];
 
 export type Command = {
   command: string;
@@ -30,17 +28,6 @@ export type ExecResult = {
   jsonError: () => JSONObject | undefined;
 }
 
-export function getArgs(args: string | string[] = [], flags: Flags = {}) {
-  let retval: string[] = [];
-  if(typeof args === "string") {
-    retval.push(spaceCheck(args))
-  } else {
-    const argsSpaceCheck = args.map(arg => spaceCheck(arg))
-    retval = retval.concat(argsSpaceCheck);
-  }
-  return retval.concat(flagsToArgs(flags));
-}
-
 export function getSpawnOptions({ cwd, env }: SpawnOptions) {
   return {
     cwd,
@@ -52,7 +39,7 @@ export function getSpawnOptions({ cwd, env }: SpawnOptions) {
 }
 
 export function commandToString({ command, args, flags }: Command) {
-  return `${command} ${getArgs(args).concat(flagsToArgs(flags)).join(" ")}`;
+  return `${command} ${getArgs(args, flags).join(" ")}`;
 }
 
 export default exec;
