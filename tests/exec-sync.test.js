@@ -1,5 +1,10 @@
 const { execSync } = require("../build");
 
+test("execSync output no flags", () => {
+  const output = execSync("echo", "hello", undefined, { silent: true }).output;
+  expect(output).toBe("hello");
+});
+
 test("execSync output", () => {
   const output = execSync("echo", "hello", {}, { silent: true }).output;
   expect(output).toBe("hello");

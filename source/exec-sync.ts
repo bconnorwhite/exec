@@ -27,7 +27,7 @@ function run(command: string, args: string[], spawnOptions: SpawnOptions, output
   return getResult(child, outputOptions);
 }
 
-export default function execSync(command: string, args: Args, flags: Flags, { cwd, env, silent }: Options): ExecResult;
+export default function execSync(command: string, args?: Args, flags?: Flags, options?: Options): ExecResult;
 export default function execSync({ command, args, flags, cwd, env, silent }: Command): ExecResult;
 export default function execSync(cmd: string | Command, args?: Args, flags?: Flags, options: Options = {}): ExecResult {
   if(typeof cmd === "string") {

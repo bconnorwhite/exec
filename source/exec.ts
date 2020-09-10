@@ -39,7 +39,7 @@ function run(command: string, args: string[], spawnOptions: SpawnOptions, output
   return getResult(child, outputOptions);
 }
 
-export default async function exec(command: string, args: Args, flags: Flags, { env, silent }: Options): Promise<ExecResult>;
+export default async function exec(command: string, args?: Args, flags?: Flags, options?: Options): Promise<ExecResult>;
 export default async function exec({ command, args, flags, env, silent }: Command): Promise<ExecResult>;
 export default async function exec(cmd: string | Command, args?: Args, flags?: Flags, options: Options = {}): Promise<ExecResult> {
   if(typeof cmd === "string") {

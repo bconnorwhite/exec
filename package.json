@@ -2,8 +2,8 @@
   "name": "@bconnorwhite/exec",
   "version": "5.3.0",
   "description": "Execute commands while keeping flags easily configurable as an object",
-  "author": "Connor White",
   "license": "MIT",
+  "author": "Connor White",
   "homepage": "https://connorwhite.org/github/exec",
   "repository": {
     "type": "git",
@@ -25,8 +25,8 @@
   "main": "./build/index.js",
   "scripts": {
     "build": "bob build",
-    "prepublishOnly": "yarn build && yarn test && coveralls < coverage/lcov.info",
     "postversion": "git push",
+    "prepublishOnly": "yarn build && yarn test && coveralls < coverage/lcov.info",
     "test": "jest --coverage --coverage-reporters text lcov"
   },
   "dependencies": {
@@ -35,7 +35,7 @@
     "terminating-newline": "^1.2.2"
   },
   "devDependencies": {
-    "@bconnorwhite/bob": "^1.9.7",
+    "@bconnorwhite/bob": "^2.1.0",
     "@types/node": "^14.0.27",
     "coveralls": "^3.1.0",
     "jest": "^26.4.2"

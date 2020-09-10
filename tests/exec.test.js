@@ -1,5 +1,11 @@
 const { exec } = require("../build");
 
+test("exec output no flags", () => {
+  exec("echo", "hello", undefined, { silent: true }).then(({ output }) => {
+    expect(output).toBe("hello");
+  });
+});
+
 test("exec output", () => {
   exec("echo", "hello", {}, { silent: true }).then(({ output }) => {
     expect(output).toBe("hello");
