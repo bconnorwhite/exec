@@ -1,4 +1,4 @@
-import { spawnSync } from "child_process";
+import { sync as spawnSync } from "cross-spawn";
 import parse from "parse-json-object";
 import stripAnsi from "strip-ansi";
 import { removeTerminatingNewline } from "terminating-newline";

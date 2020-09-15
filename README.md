@@ -247,6 +247,7 @@ type Command = {
 
 <h2>Dependencies<img align="right" alt="dependencies" src="https://img.shields.io/david/bconnorwhite/exec.svg"></h2>
 
+- [cross-spawn](https://npmjs.com/package/cross-spawn): Cross platform child_process#spawn and child_process#spawnSync
 - [parse-json-object](https://npmjs.com/package/parse-json-object): Parse a typed JSON object.
 - [strip-ansi](https://npmjs.com/package/strip-ansi): Strip ANSI escape codes from a string
 - [terminating-newline](https://npmjs.com/package/terminating-newline): Add or remove a terminating newline
@@ -258,6 +259,7 @@ type Command = {
 <h2>Dev Dependencies<img align="right" alt="David" src="https://img.shields.io/david/dev/bconnorwhite/exec.svg"></h2>
 
 - [@bconnorwhite/bob](https://npmjs.com/package/@bconnorwhite/bob): Bob builds and watches typescript projects.
+- [@types/cross-spawn](https://npmjs.com/package/@types/cross-spawn): TypeScript definitions for cross-spawn
 - [@types/node](https://npmjs.com/package/@types/node): TypeScript definitions for Node.js
 - [coveralls](https://npmjs.com/package/coveralls): Takes json-cov output into stdin and POSTs to coveralls.io
 - [jest](https://npmjs.com/package/jest): Delightful JavaScript Testing.

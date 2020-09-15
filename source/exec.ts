@@ -1,4 +1,5 @@
-import { spawn, ChildProcessWithoutNullStreams } from "child_process";
+import { ChildProcessWithoutNullStreams } from "child_process";
+import { spawn } from "cross-spawn";
 import stripAnsi from "strip-ansi";
 import parse from "parse-json-object";
 import { removeTerminatingNewline } from "terminating-newline";
