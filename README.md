@@ -4,7 +4,7 @@
     <img alt="npm" src="https://img.shields.io/npm/v/@bconnorwhite/exec.svg">
   </a>
   <a href="https://github.com/bconnorwhite/exec">
-    <img alt="typescript" src="https://img.shields.io/github/languages/top/bconnorwhite/exec.svg">
+    <img alt="typescript" src="https://img.shields.io/badge/TypeScript-%F0%9F%91%8D-blue.svg">
   </a>
   <a href='https://coveralls.io/github/bconnorwhite/exec?branch=master'>
     <img alt="Coveralls github" src="https://img.shields.io/coveralls/github/bconnorwhite/exec.svg">
