@@ -2,7 +2,8 @@ import exec from "./exec";
 import execSync from "./exec-sync";
 import execAll, { ExecAllOptions } from "./exec-all";
 import { JSONObject } from "parse-json-object";
-import { getArgs, flagsToArgs, Args, Flags } from "./args";
+import { flagsToArgs, Args, Flags } from "./args";
+import { commandToString } from "./utils";
 
 export type SpawnOptions = {
   env?: NodeJS.ProcessEnv;
@@ -30,21 +31,6 @@ export type ExecResult = {
   jsonError: () => JSONObject | undefined;
 }
 
-export function getSpawnOptions({ cwd, env }: SpawnOptions): SpawnOptions {
-  return {
-    cwd,
-    env: {
-      ...process.env,
-      FORCE_COLOR: "1",
-      ...env
-    }
-  }
-}
-
-export function commandToString({ command, args, flags }: Command) {
-  return `${command} ${getArgs(args, flags).join(" ")}`;
-}
-
 export default exec;
 
 export {
@@ -52,6 +38,7 @@ export {
   execSync,
   execAll,
   flagsToArgs,
+  commandToString,
   Flags,
   ExecAllOptions,
   JSONObject

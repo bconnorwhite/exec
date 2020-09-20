@@ -2,8 +2,9 @@ import { sync as spawnSync } from "cross-spawn";
 import parse from "parse-json-object";
 import stripAnsi from "strip-ansi";
 import { removeTerminatingNewline } from "terminating-newline";
-import { getSpawnOptions, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
+import { Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
 import { getArgs, Args, Flags } from "./args";
+import { getSpawnOptions } from "./utils";
 
 function getResult({ stdout, stderr }: { stdout: Buffer | null, stderr: Buffer | null }, { silent }: OutputOptions) {
   if(silent !== true) {

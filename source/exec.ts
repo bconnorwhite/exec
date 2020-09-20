@@ -3,8 +3,9 @@ import { spawn } from "cross-spawn";
 import stripAnsi from "strip-ansi";
 import parse from "parse-json-object";
 import { removeTerminatingNewline } from "terminating-newline";
-import { getSpawnOptions, Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
+import { Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
 import { getArgs, Args, Flags } from "./args";
+import { getSpawnOptions } from "./utils";
 
 function getResult(child: ChildProcessWithoutNullStreams, { silent }: OutputOptions): Promise<ExecResult> {
   return new Promise((resolve) => {
