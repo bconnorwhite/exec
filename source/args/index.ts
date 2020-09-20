@@ -1,3 +1,4 @@
+import asArray from "as-typed-array";
 import { flag, Flags } from "./flags";
 
 export type Arg = string | Flags;
@@ -21,14 +22,6 @@ export function flagsToArgs(flags: Flags = {}) {
       return retval;
     }
   }, ([] as string[]));
-}
-
-function asArray(args: Args) {
-  if(Array.isArray(args)) {
-    return args;
-  } else {
-    return [args];
-  }
 }
 
 // flagsToArgs should independently quote its output which why concat is after map

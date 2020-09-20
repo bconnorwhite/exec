@@ -229,6 +229,7 @@ type Executable = {
 
 <h2>Dependencies<img align="right" alt="dependencies" src="https://img.shields.io/david/bconnorwhite/exec.svg"></h2>
 
+- [as-typed-array](https://npmjs.com/package/as-typed-array): Make any value an array, and maintain types
 - [cross-spawn](https://npmjs.com/package/cross-spawn): Cross platform child_process#spawn and child_process#spawnSync
 - [parse-json-object](https://npmjs.com/package/parse-json-object): Parse a typed JSON object.
 - [strip-ansi](https://npmjs.com/package/strip-ansi): Strip ANSI escape codes from a string

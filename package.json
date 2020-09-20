@@ -31,6 +31,7 @@
     "test": "jest --coverage --coverage-reporters lcov"
   },
   "dependencies": {
+    "as-typed-array": "^1.0.0",
     "cross-spawn": "^7.0.3",
     "extract-first-json": "^1.0.1",
     "strip-ansi": "^6.0.0",
