@@ -1,45 +1,35 @@
+import { JSONObject, JSONArray } from "extract-first-json";
 import exec from "./exec";
 import execSync from "./exec-sync";
-import execAll, { ExecAllOptions } from "./exec-all";
-import { JSONObject } from "parse-json-object";
-import { flagsToArgs, Args, Flags } from "./args";
-import { commandToString } from "./utils";
+import execAll, { ExecAllOptions, execAllSeries, execAllParallel, execAllSync } from "./exec-all";
+import { Args } from "./args";
+import { Options } from "./options";
+import { executableToString } from "./utils";
 
-export type SpawnOptions = {
-  env?: NodeJS.ProcessEnv;
-  cwd?: string;
-}
-
-export type OutputOptions = {
-  silent?: boolean;
-}
-
-export type Options = SpawnOptions & OutputOptions;
-
-export type Command = {
+export type Executable = {
   command: string;
   args?: Args;
-  flags?: Flags;
 } & Options;
 
 export type ExecResult = {
   error: string;
   output: string;
-  colorError: string;
-  colorOutput: string;
-  jsonOutput: () => JSONObject | undefined;
-  jsonError: () => JSONObject | undefined;
+  textError: string;
+  textOutput: string;
+  jsonOutput: () => JSONObject | JSONArray | undefined;
+  jsonError: () => JSONObject | JSONArray | undefined;
 }
-
-export default exec;
 
 export {
   exec,
   execSync,
   execAll,
-  flagsToArgs,
-  commandToString,
-  Flags,
+  execAllSync,
+  execAllParallel,
+  execAllSeries,
+  executableToString,
+  Options,
   ExecAllOptions,
-  JSONObject
+  JSONObject,
+  JSONArray
 }

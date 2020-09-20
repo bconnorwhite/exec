@@ -23,8 +23,9 @@
 
 - Run one or multiple commands in parallel or series
 - Easily define arguments and flags
+- Easily extract JSON output
 - Inject environment variables
-- Set silent to ignore output
+- Set `silent` to block CLI output
 
 ## Installation
 
@@ -36,70 +37,80 @@ yarn add @bconnorwhite/exec
 npm install @bconnorwhite/exec
 ```
 
-### API
+## API
 
 - [exec](#exec)  
 - [execSync](#execsync)  
 - [execAll](#execall)  
-- [flagsToArgs](#flagstoargs)
-- [commandToString](#commandtostring)
+- [executableToString](#executabletostring)
 
-##
+<br />
 
-## exec
-### Usage
+### exec
+
+#### Usage
+
 ```js
-import exec from "@bconnorwhite/exec";
+import { exec } from "@bconnorwhite/exec";
 
 // Simple usage:
 exec("echo", "hello");
 
-// Object usage:
+// Explicit usage:
 exec({
   command: "babel",
-  args: "./src", // for multiple args, use an array instead
-  flags: {
-    "out-dir": "./build",
-    "config-file": "./babel.config.json",
-    "w": true // single character flags will be set using a single dash
-  }
+  args: [
+    "./src",
+    { // Objects are used for flags
+      "out-dir": "./build",
+      "config-file": "./babel.config.json",
+      "w": true // single character flags will be set using a single dash
+    }
+  ]
 });
 
 // Equivalent of:
 // babel ./src --out-dir ./build --config-file ./babel.config.json -w
 ```
-### Types
-```ts
-function exec(command: string, args: Args, flags: Flags, { env, silent }: Options): Promise<ExecResult>;
-function exec({ command, args, flags, env, silent }: Command): Promise<ExecResult>;
 
-type Command = {
+#### Types
+
+```ts
+function exec(command: string, args: Args, { env, silent }: Options): Promise<ExecResult>;
+function exec({ command, args, env, silent }: Executable): Promise<ExecResult>;
+
+type Executable = {
   command: string;
-  args?: string | string[];
-  flags?: Flags;
+  args?: Args;
   cwd?: string;
   env?: NodeJS.ProcessEnv;
   silent?: boolean;
 }
 
+type Args = Arg | Arg[];
+
+type Arg = string | Flags;
+
 type Flags = {
-  [flag: string]: string | boolean | string[] | undefined;
+  [flag: string]: string | number | boolean  | string[] | undefined;
 }
 
 type ExecResult = {
-  error: string;
   output: string;
-  colorError: string;
-  colorOutput: string;
-  jsonOutput: () => JSONObject | undefined;
-  jsonError: () => JSONObject | undefined;
+  error: string;
+  textOutput: string; // output stripped on ANSI colors
+  textError: string; // error stripped on ANSI colors
+  jsonOutput: () => JSONObject | JSONArray | undefined; // First JSON object or array in output
+  jsonError: () => JSONObject | JSONArray | undefined; // First JSON object or array in error
 }
 ```
 
-##
+<br />
 
-## execSync
-### Usage
+### execSync
+
+#### Usage
+
 ```js
 import { execSync } from "@bconnorwhite/exec";
 
@@ -109,12 +120,14 @@ execSync("echo", "hello");
 // Object usage:
 execSync({
   command: "babel",
-  args: "./src", // for multiple args, use an array instead
-  flags: {
-    "out-dir": "./build",
-    "config-file": "./babel.config.json",
-    "w": true // single character flags will be set using a single dash
-  }
+  args: [
+    "./src",
+    { // Objects are used for flags
+      "out-dir": "./build",
+      "config-file": "./babel.config.json",
+      "w": true // single character flags will be set using a single dash
+    }
+  ]
 });
 
 // Equivalent of:
@@ -122,29 +135,33 @@ execSync({
 ```
 ### Types
 ```ts
-function execSync(command: string, args: Args, flags: Flags, { env, silent }: Options): ExecResult;
-function execSync({ command, args, flags, env, silent }: Command): ExecResult;
+function execSync(command: string, args: Args, { env, silent }: Options): ExecResult;
+function execSync({ command, args, env, silent }: Executable): ExecResult;
 
 ```
 
-##
+<br />
 
-## execAll
-### Usage
+### execAll
+
+#### Usage
+
 ```js
 import { execAll } from "@bconnorwhite/exec";
 
 execAll([{
   command: "babel",
-  args: ["./src"],
-  flags: {
-    "out-dir": "./build",
-    "config-file": "./babel.config.json",
-    "watch": true
-  }
+  args: [
+    "./src",
+    { // Objects are used for flags
+      "out-dir": "./build",
+      "config-file": "./babel.config.json",
+      "w": true // single character flags will be set using a single dash
+    }
+  ]
 }, {
   command: "tsc",
-  flags: {
+  args: {
     "emitDeclarationOnly": true
   }
 }], {
@@ -156,10 +173,10 @@ execAll([{
 // Equivalent of:
 // NODE_ENV=development babel ./src --out-dir ./build --config-file ./babel.config.json --watch && tsc --emitDeclarationOnly
 ```
-### Types
+#### Types
 ```ts
 function execAll(
-  commands: Command[],
+  executables: Executable[],
   options: ExecAllOptions
 ): Promise<ExecResult[]>;
 
@@ -171,77 +188,42 @@ type ExecAllOptions = {
 }
 ```
 
-##
+<br />
 
-## flagsToArgs
+### executableToString
 
-### Usage
+#### Usage
+
 ```js
-import { flagsToArgs } from "@bconnorwhite/exec";
+import { executableToString } from "@bconnorwhite/exec";
 
-flagsToArgs({
-  "out-dir": "./build",
-  "config-file": "./babel.config.json",
-  "watch": true
-});
-// ["--out-dir", "./build", "--config-file", "./babel.config.json", "--watch"]
-```
-### Types
-```ts
-function flagsToArgs(flags?: Flags): string[];
-
-type Flags = {
-  [flag: string]: string | boolean | string[] | undefined;
-}
-```
-
-flagsToArgs is useful for adding flags that must preceed later arguments. For example:
-
-```ts
-import { flagsToArgs } from "@bconnorwhite/exec";
-
-const files = [...];
-
-exec({
-  command: "wc",
-  args: flagsToArgs({ l: true }).concat(files)
-});
-// Equivalent of:
-// wc -l [FILES]...
-```
-
-##
-
-## commandToString
-
-### Usage
-```js
-import { commandToString } from "@bconnorwhite/exec";
-
-commandToString({
+executableToString({
   command: "foo",
-  args: ["a", "b"],
-  flags: {
-    c: true,
-    d: "ok",
-    long: true
-  }
+  args: [
+    "a",
+    "b",
+    {
+      c: true,
+      d: "ok",
+      long: true
+    }
+  ]
 });
 // "foo a b -c -d ok --long"
 ```
-### Types
-```ts
-function commandToString(command: Command): string;
 
-type Command = {
+#### Types
+
+```ts
+function executableToString(command: Executable): string;
+
+type Executable = {
   command: string;
   args?: string | string[];
   flags?: Flags;
   env?: NodeJS.ProcessEnv;
 }
 ```
-
-##
 
 <br />
 
@@ -251,8 +233,6 @@ type Command = {
 - [parse-json-object](https://npmjs.com/package/parse-json-object): Parse a typed JSON object.
 - [strip-ansi](https://npmjs.com/package/strip-ansi): Strip ANSI escape codes from a string
 - [terminating-newline](https://npmjs.com/package/terminating-newline): Add or remove a terminating newline
-
-##
 
 <br />
 
@@ -264,12 +244,8 @@ type Command = {
 - [coveralls](https://npmjs.com/package/coveralls): Takes json-cov output into stdin and POSTs to coveralls.io
 - [jest](https://npmjs.com/package/jest): Delightful JavaScript Testing.
 
-##
-
 <br />
 
 <h2>License <img align="right" alt="license" src="https://img.shields.io/npm/l/@bconnorwhite/exec.svg"></h2>
 
 [MIT](https://mit-license.org/)
-
-##

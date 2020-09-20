@@ -1,49 +1,50 @@
+import { SpawnSyncReturns } from "child_process";
 import { sync as spawnSync } from "cross-spawn";
 import parse from "parse-json-object";
 import stripAnsi from "strip-ansi";
 import { removeTerminatingNewline } from "terminating-newline";
-import { Command, Options, ExecResult, SpawnOptions, OutputOptions } from "./";
-import { getArgs, Args, Flags } from "./args";
-import { getSpawnOptions } from "./utils";
+import { Executable, Options, ExecResult } from "./";
+import { getArgs, Args } from "./args";
+import { getSpawnOptions, SpawnOptionsWithStdio, OutputOptions } from "./options";
 
-function getResult({ stdout, stderr }: { stdout: Buffer | null, stderr: Buffer | null }, { silent }: OutputOptions) {
+function getResult({ stdout, stderr }: SpawnSyncReturns<Buffer>, { silent }: OutputOptions) {
   if(silent !== true) {
     process.stdout.write(stdout ?? "");
     process.stderr.write(stderr ?? "");
   }
-  const outputString = stdout ? removeTerminatingNewline(stdout).toString() : "";
-  const errorString = stderr ? removeTerminatingNewline(stderr).toString() : "";
+  const output = stdout ? removeTerminatingNewline(stdout).toString() : "";
+  const error = stderr ? removeTerminatingNewline(stderr).toString() : "";
+  const textOutput = stripAnsi(output);
+  const textError = stripAnsi(output);
   return {
-    output: stripAnsi(outputString),
-    error: stripAnsi(errorString),
-    colorOutput: outputString,
-    colorError: outputString,
-    jsonOutput: () => parse(stripAnsi(outputString)),
-    jsonError: () => parse(stripAnsi(errorString))
+    output,
+    error,
+    textOutput,
+    textError,
+    jsonOutput: () => parse(textOutput),
+    jsonError: () => parse(textError)
   }
 }
 
-function run(command: string, args: string[], spawnOptions: SpawnOptions, outputOptions: OutputOptions) {
+function run(command: string, args: string[], spawnOptions: SpawnOptionsWithStdio, outputOptions: OutputOptions) {
   const child = spawnSync(command, args, spawnOptions);
   return getResult(child, outputOptions);
 }
 
-export default function execSync(command: string, args?: Args, flags?: Flags, options?: Options): ExecResult;
-export default function execSync({ command, args, flags, cwd, env, silent }: Command): ExecResult;
-export default function execSync(cmd: string | Command, args?: Args, flags?: Flags, options: Options = {}): ExecResult {
+export default function execSync(command: string, args?: Args, options?: Options): ExecResult;
+export default function execSync({ command, args, cwd, env, silent }: Executable): ExecResult;
+export default function execSync(cmd: string | Executable, args?: Args, options: Options = {}): ExecResult {
   if(typeof cmd === "string") {
-    const argsList = getArgs(args, flags);
     const spawnOptions = getSpawnOptions({
       cwd: options.cwd,
       env: options.env
     });
-    return run(cmd, argsList, spawnOptions, { silent: options.silent });
+    return run(cmd, getArgs(args), spawnOptions, { silent: options.silent });
   } else {
-    const argsList = getArgs(cmd.args, cmd.flags);
     const spawnOptions = getSpawnOptions({
       cwd: cmd.cwd,
       env: cmd.env
     });
-    return run(cmd.command, argsList, spawnOptions, { silent: cmd.silent });
+    return run(cmd.command, getArgs(cmd.args), spawnOptions, { silent: cmd.silent });
   }
 }

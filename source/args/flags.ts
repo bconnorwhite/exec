@@ -1,6 +1,8 @@
 
+export type Flag = string | boolean | number | string[] | undefined;
+
 export type Flags = {
-  [flag: string]: string | boolean | string[] | undefined;
+  [flag: string]: Flag;
 }
 
 export function flag(name: string) {
