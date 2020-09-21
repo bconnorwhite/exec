@@ -29,4 +29,3 @@ test("exec jsonOutput", () => {
     expect(jsonOutput().header.cloc_url).toBe("github.com/AlDanial/cloc");
   });
 });
-

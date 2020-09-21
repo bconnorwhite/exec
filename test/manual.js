@@ -1,4 +1,4 @@
-const { execAll } = require("../build");
+const { exec, execAll } = require("../build");
 
 execAll([{
   command: "node",
@@ -13,3 +13,7 @@ execAll([{
 }).then((results) => {
   console.log(results);
 });
+
+// exec("yarn", ["run", "cz"]).then((result) => {
+//   console.log(result);
+// });
