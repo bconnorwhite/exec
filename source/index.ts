@@ -2,7 +2,7 @@ import { JSONObject, JSONArray } from "extract-first-json";
 import exec from "./exec";
 import execSync from "./exec-sync";
 import execAll, { ExecAllOptions, execAllSeries, execAllParallel, execAllSync } from "./exec-all";
-import { Args } from "./args";
+import { Arg, Args, Flag, Flags } from "./args";
 import { Options } from "./options";
 import { executableToString } from "./utils";
 
@@ -28,6 +28,10 @@ export {
   execAllParallel,
   execAllSeries,
   executableToString,
+  Arg,
+  Args,
+  Flag,
+  Flags,
   Options,
   ExecAllOptions,
   JSONObject,

@@ -1,5 +1,5 @@
 import asArray from "as-typed-array";
-import { flag, Flags } from "./flags";
+import { flag, Flag, Flags } from "./flags";
 
 export type Arg = string | Flags;
 
@@ -36,5 +36,6 @@ export function getArgs(args: Args = []) {
 }
 
 export {
+  Flag,
   Flags
 }
