@@ -15,7 +15,7 @@ function getResult({ stdout, stderr }: SpawnSyncReturns<Buffer>, { silent }: Out
   const output = stdout ? removeTerminatingNewline(stdout).toString() : "";
   const error = stderr ? removeTerminatingNewline(stderr).toString() : "";
   const textOutput = stripAnsi(output);
-  const textError = stripAnsi(output);
+  const textError = stripAnsi(error);
   return {
     output,
     error,

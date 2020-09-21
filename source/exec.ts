@@ -26,7 +26,7 @@ function getResult(child: ChildProcessByStdio<null, Readable, Readable>, { silen
       const output = removeTerminatingNewline(Buffer.concat(outputBuffer)).toString();
       const error = removeTerminatingNewline(Buffer.concat(errorBuffer)).toString();
       const textOutput = stripAnsi(output);
-      const textError = stripAnsi(output);
+      const textError = stripAnsi(error);
       resolve({
         output,
         error,
