@@ -1,5 +1,6 @@
-build
+/build
 node_modules
-coverage
+/coverage
 .coveralls.yml
+.DS_Store
 yarn-error.log
