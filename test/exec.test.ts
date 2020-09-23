@@ -1,7 +1,13 @@
-const { exec } = require("../build");
+import { exec } from "../source";
 
 test("exec output no flags", () => {
   exec("echo", "hello", { silent: true }).then(({ output }) => {
+    expect(output).toBe("hello");
+  });
+});
+
+test("exec output no silent", () => {
+  exec("echo", "hello").then(({ output }) => {
     expect(output).toBe("hello");
   });
 });
@@ -14,18 +20,18 @@ test("exec output", () => {
 
 test("exec jsonOutput", () => {
   exec("echo", JSON.stringify({ ok: true }), { silent: true }).then(({ jsonOutput }) => {
-    expect(jsonOutput().ok).toBe(true);
+    expect(jsonOutput()).toEqual({ ok: true });
   });
 });
 
 test("exec cwd", () => {
   exec("ls", ".", { cwd: "test", silent: true }).then(({ output }) => {
-    expect(output.includes("exec.test.js")).toBe(true);
+    expect(output).toContain("exec.test.ts");
   });
 });
 
 test("exec jsonOutput", () => {
-  exec("yarn", ["cloc", "source", "--json"], { silent: true }).then(({ jsonOutput }) => {
-    expect(jsonOutput().header.cloc_url).toBe("github.com/AlDanial/cloc");
+  exec("echo", ["'Output: { \"ok\": true }'"], { silent: true }).then(({ jsonOutput }) => {
+    expect(jsonOutput()).toEqual({ ok: true });
   });
 });

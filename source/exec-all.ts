@@ -1,7 +1,7 @@
 import { exec, execSync, Executable, ExecResult, Options } from "./";
 
-export type ExecAllOptions = {
-  parallel?: boolean;
+export type ExecAllOptions<P extends boolean> = {
+  parallel?: P;
 } & Options;
 
 function getPayload(executable: Executable, options: Options) {
@@ -41,7 +41,12 @@ export async function execAllParallel(executables: Executable[], options: Option
   }, ([] as Promise<ExecResult>[]));
 }
 
-export default function execAll(executables: Executable[], options: ExecAllOptions = {}) {
+export default function execAll(executables: Executable[], options: ExecAllOptions<true>): Promise<Promise<ExecResult>[]>;
+export default function execAll(executables: Executable[], options: ExecAllOptions<false>): Promise<ExecResult[]>;
+export default function execAll(
+  executables: Executable[],
+  options: ExecAllOptions<boolean> = {}
+) {
   if(options.parallel) {
     return execAllParallel(executables, options);
   } else {
