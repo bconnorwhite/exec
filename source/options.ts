@@ -21,7 +21,7 @@ export function getSpawnOptions({ cwd, env }: SpawnOptions): SpawnOptionsWithStd
     env: {
       ...process.env,
       FORCE_COLOR: "1",
-      CLI_WIDTH: process.stdout.getWindowSize()[0].toString(),
+      CLI_WIDTH: typeof process.stdout.getWindowSize === "function" ? process.stdout.getWindowSize()[0].toString() : undefined,
       ...env
     },
     stdio: ["inherit", "pipe", "pipe"]
