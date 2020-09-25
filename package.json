@@ -38,7 +38,7 @@
     "terminating-newline": "^1.2.2"
   },
   "devDependencies": {
-    "@bconnorwhite/bob": "^2.3.1",
+    "@bconnorwhite/bob": "^2.4.2",
     "@types/cross-spawn": "^6.0.2",
     "@types/node": "^14.0.27",
     "commitizen": "^4.2.1",
