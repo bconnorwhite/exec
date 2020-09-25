@@ -28,7 +28,7 @@
     "lint": "bob lint",
     "postversion": "git push --follow-tags",
     "prepublishOnly": "yarn lint && yarn build && yarn test && coveralls < coverage/lcov.info",
-    "test": "jest --coverage --coverage-reporters lcov"
+    "test": "jest --coverage --coverage-reporters lcov text --config '{\"preset\":\"ts-jest\"}'"
   },
   "dependencies": {
     "as-typed-array": "^1.0.0",
