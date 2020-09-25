@@ -1,7 +1,7 @@
 import { SpawnSyncReturns } from "child_process";
 import { sync as spawnSync } from "cross-spawn";
-import parse from "parse-json-object";
 import stripAnsi from "strip-ansi";
+import { extractJSON } from "extract-first-json";
 import { removeTerminatingNewline } from "terminating-newline";
 import { Executable, Options, ExecResult } from "./";
 import { getArgs, Args } from "./args";
@@ -21,8 +21,8 @@ function getResult({ stdout, stderr }: SpawnSyncReturns<Buffer>, { silent }: Out
     error,
     textOutput,
     textError,
-    jsonOutput: () => parse(textOutput),
-    jsonError: () => parse(textError)
+    jsonOutput: () => extractJSON(textOutput),
+    jsonError: () => extractJSON(textError)
   }
 }
 
