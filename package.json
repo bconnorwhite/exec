@@ -25,11 +25,10 @@
   "main": "./build/index.js",
   "scripts": {
     "build": "bob build",
-    "commit": "cz",
+    "commit": "bob commit",
     "lint": "bob lint",
-    "postversion": "git push --follow-tags",
-    "prepublishOnly": "yarn lint && yarn build && yarn test && coveralls < coverage/lcov.info",
-    "test": "jest --coverage --coverage-reporters lcov text --config '{\"preset\":\"ts-jest\"}'"
+    "release": "bob publish",
+    "test": "bob test"
   },
   "dependencies": {
     "as-typed-array": "^1.0.0",
@@ -39,17 +38,19 @@
     "terminating-newline": "^1.2.2"
   },
   "devDependencies": {
-    "@bconnorwhite/bob": "^2.4.2",
+    "@bconnorwhite/bob": "^2.9.2",
     "@types/cross-spawn": "^6.0.2",
     "@types/node": "^14.0.27",
-    "commitizen": "^4.2.1",
-    "coveralls": "^3.1.0",
-    "cz-conventional-changelog": "^3.3.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.4.0"
   },
   "eslintConfig": {
     "extends": "eslint-config-bob"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "bob lint commit"
+    }
   },
   "npmpackagejsonlint": {
     "extends": "npm-package-json-lint-config-bob"

@@ -6,8 +6,8 @@
   <a href="https://github.com/bconnorwhite/bob">
     <img alt="typescript" src="https://img.shields.io/github/languages/top/bconnorwhite/bob.svg">
   </a>
-  <a href='https://coveralls.io/github/bconnorwhite/exec?branch=master'>
-    <img alt="Coveralls github" src="https://img.shields.io/coveralls/github/bconnorwhite/exec.svg">
+  <a href="https://coveralls.io/github/bconnorwhite/exec?branch=master">
+    <img alt="Coveralls Status" src="https://img.shields.io/coveralls/github/bconnorwhite/exec.svg?branch=master">
   </a>
   <a href="https://github.com/bconnorwhite/exec">
     <img alt="GitHub stars" src="https://img.shields.io/github/stars/bconnorwhite/exec?label=Stars%20Appreciated%21&style=social">

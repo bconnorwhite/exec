@@ -1,3 +1,4 @@
+import { test, expect } from "@jest/globals";
 import { executableToString } from "../source";
 import { flagsToArgs } from "../source/args";
 

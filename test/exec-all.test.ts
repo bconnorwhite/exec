@@ -1,3 +1,4 @@
+import { test, expect } from "@jest/globals";
 import { execAll, execAllParallel, execAllSeries, execAllSync } from "../source";
 
 test("execAll series", () => {

@@ -1,17 +1,18 @@
+import { test, expect } from "@jest/globals";
 import { execSync } from "../source";
 
 test("execSync output no flags", () => {
-  const output = execSync("echo", "hello", { silent: true }).output;
+  const { output } = execSync("echo", "hello", { silent: true });
   expect(output).toBe("hello");
 });
 
 test("execSync output no silent", () => {
-  const output = execSync("echo", "hello").output;
+  const { output } = execSync("echo", "hello");
   expect(output).toBe("hello");
 });
 
 test("execSync output", () => {
-  const output = execSync("echo", "hello", { silent: true }).output;
+  const { output } = execSync("echo", "hello", { silent: true });
   expect(output).toBe("hello");
 });
 
