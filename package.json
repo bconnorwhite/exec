@@ -35,7 +35,7 @@
     "cross-spawn": "^7.0.3",
     "extract-first-json": "^1.0.1",
     "strip-ansi": "^6.0.0",
-    "terminating-newline": "^1.2.2"
+    "terminating-newline": "^1.2.4"
   },
   "devDependencies": {
     "@bconnorwhite/bob": "^2.9.2",
