@@ -7,11 +7,11 @@ export type SpawnOptionsWithStdio = child_process.SpawnOptions & {
 export type SpawnOptions = {
   env?: NodeJS.ProcessEnv;
   cwd?: string;
-}
+};
 
 export type OutputOptions = {
   silent?: boolean;
-}
+};
 
 export type Options = SpawnOptions & OutputOptions;
 
@@ -25,5 +25,5 @@ export function getSpawnOptions({ cwd, env }: SpawnOptions): SpawnOptionsWithStd
       ...env
     },
     stdio: ["inherit", "pipe", "pipe"]
-  }
+  };
 }

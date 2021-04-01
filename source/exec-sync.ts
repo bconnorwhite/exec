@@ -23,7 +23,7 @@ function getResult({ stdout, stderr }: SpawnSyncReturns<Buffer>, { silent }: Out
     textError,
     jsonOutput: () => extractJSON(textOutput),
     jsonError: () => extractJSON(textError)
-  }
+  };
 }
 
 function run(command: string, args: string[], spawnOptions: SpawnOptionsWithStdio, outputOptions: OutputOptions) {

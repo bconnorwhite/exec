@@ -18,7 +18,7 @@ export type ExecResult = {
   textOutput: string;
   jsonOutput: () => JSONObject | JSONArray | undefined;
   jsonError: () => JSONObject | JSONArray | undefined;
-}
+};
 
 export {
   exec,
@@ -36,4 +36,4 @@ export {
   ExecAllOptions,
   JSONObject,
   JSONArray
-}
+};

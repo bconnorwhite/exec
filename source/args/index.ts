@@ -38,4 +38,4 @@ export function getArgs(args: Args = []) {
 export {
   Flag,
   Flags
-}
+};
