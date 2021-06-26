@@ -1,6 +1,6 @@
 {
   "name": "@bconnorwhite/exec",
-  "version": "6.0.7",
+  "version": "6.0.8",
   "description": "Execute commands while keeping flags easily configurable as an object",
   "license": "MIT",
   "author": "Connor White",

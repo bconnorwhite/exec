@@ -1,3 +1,13 @@
+## [6.0.8](https://github.com/bconnorwhite/exec/compare/v6.0.7...v6.0.8) (2021-06-26)
+
+
+### Bug Fixes
+
+* dependency cleanup ([1d38e69](https://github.com/bconnorwhite/exec/commit/1d38e6969c2052d2d7efcf842a4c2fc1759a6acc))
+* type fix ([a921f99](https://github.com/bconnorwhite/exec/commit/a921f9904f0b9ae5fab25ae7fe468e8eac6d705d))
+
+
+
 ## [6.0.7](https://github.com/bconnorwhite/exec/compare/v6.0.6...v6.0.7) (2021-04-01)
 
 
