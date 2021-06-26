@@ -1,4 +1,4 @@
-import child_process from "child_process";
+import * as child_process from "child_process";
 
 export type SpawnOptionsWithStdio = child_process.SpawnOptions & {
   stdio: ["inherit", "pipe", "pipe"];
