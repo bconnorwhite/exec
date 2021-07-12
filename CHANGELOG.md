@@ -1,3 +1,12 @@
+## [6.0.9](https://github.com/bconnorwhite/exec/compare/v6.0.8...v6.0.9) (2021-07-12)
+
+
+### Bug Fixes
+
+* destructure undefined env issue ([2158e79](https://github.com/bconnorwhite/exec/commit/2158e791d26949135053b5cc3229fd2df7c48152))
+
+
+
 ## [6.0.8](https://github.com/bconnorwhite/exec/compare/v6.0.7...v6.0.8) (2021-06-26)
 
 
