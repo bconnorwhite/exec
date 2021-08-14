@@ -1,3 +1,7 @@
+## [6.0.10](https://github.com/bconnorwhite/exec/compare/v6.0.9...v6.0.10) (2021-08-14)
+
+
+
 ## [6.0.9](https://github.com/bconnorwhite/exec/compare/v6.0.8...v6.0.9) (2021-07-12)
 
 
