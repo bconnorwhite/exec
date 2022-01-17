@@ -1,3 +1,12 @@
+## [6.0.11](https://github.com/bconnorwhite/exec/compare/v6.0.10...v6.0.11) (2022-01-17)
+
+
+### Bug Fixes
+
+* yarn upgrade ([258f4a3](https://github.com/bconnorwhite/exec/commit/258f4a3b437a04378ae9509095155b6d55617366))
+
+
+
 ## [6.0.10](https://github.com/bconnorwhite/exec/compare/v6.0.9...v6.0.10) (2021-08-14)
 
 
