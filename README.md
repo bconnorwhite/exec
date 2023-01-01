@@ -77,7 +77,7 @@ exec({
 
 ```ts
 function exec(command: string, args: Args, { env, silent }: Options): Promise<ExecResult>;
-function exec({ command, args, env, silent }: Executable): Promise<ExecResult>;
+function exec({ command, args, env, silent, cwd }: Executable): Promise<ExecResult>;
 
 type Executable = {
   command: string;

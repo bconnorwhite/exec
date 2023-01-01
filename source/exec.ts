@@ -45,7 +45,7 @@ function run(command: string, args: string[], spawnOptions: SpawnOptionsWithStdi
 }
 
 export default async function exec(command: string, args?: Args, options?: Options): Promise<ExecResult>;
-export default async function exec({ command, args, env, silent }: Executable): Promise<ExecResult>;
+export default async function exec({ command, args, env, silent, cwd }: Executable): Promise<ExecResult>;
 export default async function exec(cmd: string | Executable, args?: Args, options: Options = {}): Promise<ExecResult> {
   if(typeof cmd === "string") {
     const spawnOptions = getSpawnOptions({
