@@ -1,3 +1,12 @@
+## [6.0.12](https://github.com/bconnorwhite/exec/compare/v6.0.11...v6.0.12) (2023-01-01)
+
+
+### Bug Fixes
+
+* include missing parameter in types ([c2b64fe](https://github.com/bconnorwhite/exec/commit/c2b64fec3a76143ff932f8d2321bf050441f5355))
+
+
+
 ## [6.0.11](https://github.com/bconnorwhite/exec/compare/v6.0.10...v6.0.11) (2022-01-17)
 
 
